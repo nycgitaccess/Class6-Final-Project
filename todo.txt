@@ -8,5 +8,15 @@ Mona
 	
 	Add fetch (for the signup page and signin page )
 	
+Yannis
+	Map API
 
+Ysambel
+	Map API
+	
+Zohir
+	Server Configuration
+
+Osman
+	Profile and Find me page
 	
