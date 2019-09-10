@@ -1,9 +1,12 @@
 Muhammed
 	Change the input according to DB
-
-Mona
 	Responsive
 	Re-organize login
 	Change all <a> to <link>
-	Add fetch
+
+Mona
+	
+	Add fetch (for the signup page and signin page )
+	
+
 	
