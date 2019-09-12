@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "root",
-    "password": "y1ann1s851385al",
-    "database": "myathens",
-    "host": "127.0.0.1",
+    "username": "9RJMVDjthZ",
+    "password": "ieZHCKYM6i",
+    "database": "9RJMVDjthZ",
+    "host": "remotemysql.com",
     "dialect": "mysql",
     "operatorsAliases": false
   },
