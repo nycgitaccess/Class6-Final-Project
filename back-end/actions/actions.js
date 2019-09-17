@@ -15,7 +15,10 @@ userActions.post('/signup', (req, res) => {
         email: req.body.email,
         password: req.body.password,
         firstname: req.body.firstname,
-        lastname: req.body.lastname
+        lastname: req.body.lastname,
+        mobilenumber: req.body.mobilenumber,
+        dateofbirth: req.body.dateofbirth,
+        gender: req.body.gender
     }
 // CHECK IF THE GIVEN USER'S EMAIL ALREADY EXISTS
     User.findOne({
@@ -50,7 +53,7 @@ userActions.post('/signin', (req, res) => {
 // FIND THE USER THROUGH THEIR USERNAME SUBMITION
     User.findOne({
         where: {
-            username: req.body.username
+            email: req.body.email
         }
     })
         .then(user => {
@@ -137,6 +140,13 @@ userActions.delete('/deleteaccount', (req, res) => {
                 error: err
             });
         });
+});
+
+userActions.get('/signout', (req, res) =>{
+    res.clearCookie("token")
+    return res.json({
+        message: "signout success"
+    })
 });
 
 module.exports = userActions;

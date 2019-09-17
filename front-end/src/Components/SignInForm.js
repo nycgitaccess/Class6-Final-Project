@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect} from 'react-router-dom';
 
 class SignInForm extends Component {
   constructor() {
@@ -7,16 +7,15 @@ class SignInForm extends Component {
 
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      redirect : false
     };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(e) {
+  handleChange= (e) => {
     const target = e.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const value =  target.value;
     const name = target.name;
 
     this.setState({
@@ -24,14 +23,53 @@ class SignInForm extends Component {
     });
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
 
-    console.log('The form was submitted with the following data:');
-    console.log(this.state);
+    authenticate(jwt, next){
+     if (typeof window!== 'undefined'){
+       localStorage.setItem("jwt", JSON.stringify(jwt))
+        next()
+       } 
+
+    }
+    handleSubmit = (event) => {
+      event.preventDefault();
+      const {email, password } = this.state;
+        
+        const user = {
+          email, 
+          password, 
+        }
+  //  console.log(user);
+
+   this.signin(user).then(data =>{
+    this.authenticate(data, ()=>this.setState({
+      redirect : true
+    }));
+
+   });
   }
-
+   
+signin = user => {
+  return fetch('http://localhost:3001/users/signin', {
+        method: "post",
+        headers: {
+          accept: "application/json",
+          "content-type": "application/json"
+        },
+        body:JSON.stringify(user)
+     })
+     .then(response =>{
+       return response.json()
+     })
+     .catch(err => console.log(err))  
+    }
+  
   render() {
+    const {email, password, redirect} = this.state
+
+    if (redirect) {
+      return < Redirect to ="/profile" />
+    }
     return (
       <div className="Sign_in">
         <form onSubmit={this.handleSubmit} className="SignIn_Form" onSubmit={this.handleSubmit}>
@@ -39,18 +77,18 @@ class SignInForm extends Component {
             <label className="label-email" htmlFor="email"><strong>User Name or E-Mail Address:</strong></label>
             <input type="email" id="email" className="FieldIn-email"
               placeholder="Enter your email" name="email"
-              value={this.state.email} onChange={this.handleChange} />
+              value={email} onChange={this.handleChange} />
           </div>
 
           <div className="FormField_in">
             <label className="label-pass" htmlFor="password"><strong>Password:</strong></label>
             <input type="password" id="password" className="FieldIn-pass"
               placeholder="Enter your password" name="password"
-              value={this.state.password} onChange={this.handleChange} />
+              value={password} onChange={this.handleChange} />
           </div>
 
           <div className="FormField_in">
-            <button className="Sign-In-button">Sign In</button>
+            <button className="Sign-In-button" onClick = {this.handleSubmit} >Sign In</button>
             <Link to="/sign-up" className="FormField-link-in">Create an account</Link>
           </div>
         </form>
