@@ -19,6 +19,6 @@
     "mysql2": "^1.7.0",
     "nodemon": "^1.19.2",
     "sequelize": "^5.18.1",
-    "validator": "^11.1.0"
+    "validator": "^13.7.0"
   }
 }
